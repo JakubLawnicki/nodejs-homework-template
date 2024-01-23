@@ -1,12 +1,13 @@
 const express = require("express");
 const {
-  listContacts,
+  // listContacts,
   getContactById,
   removeContact,
   addContact,
   updateContact,
 } = require("../../models/contacts");
 const Joi = require("joi");
+const { indexContacts } = require("../../controllers/contacts/indexContacts");
 
 // random id generator
 
@@ -19,22 +20,24 @@ const router = express.Router();
 
 router.use(express.json());
 
-router.get("/", async (req, res, next) => {
-  try {
-    const data = await listContacts();
-    const list = JSON.stringify(data);
-    const contacts = JSON.parse(list);
+// router.get("/", async (req, res, next) => {
+//   try {
+//     const data = await listContacts();
+//     const list = JSON.stringify(data);
+//     const contacts = JSON.parse(list);
 
-    res.status(200).json({
-      status: "success",
-      code: 200,
-      message: "List of contacts found",
-      data: { contacts },
-    });
-  } catch (e) {
-    console.error(e);
-  }
-});
+//     res.status(200).json({
+//       status: "success",
+//       code: 200,
+//       message: "List of contacts found",
+//       data: { contacts },
+//     });
+//   } catch (e) {
+//     console.error(e);
+//   }
+// });
+
+router.get("/", indexContacts);
 
 router.get("/:contactId", async (req, res, next) => {
   try {
