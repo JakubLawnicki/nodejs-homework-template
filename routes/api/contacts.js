@@ -1,13 +1,12 @@
 const express = require("express");
 const {
-  // listContacts,
-  getContactById,
   removeContact,
   addContact,
   updateContact,
 } = require("../../models/contacts");
 const Joi = require("joi");
 const { indexContacts } = require("../../controllers/contacts/indexContacts");
+const { showContacts } = require("../../controllers/contacts/showContacts");
 
 // random id generator
 
@@ -20,50 +19,8 @@ const router = express.Router();
 
 router.use(express.json());
 
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const data = await listContacts();
-//     const list = JSON.stringify(data);
-//     const contacts = JSON.parse(list);
-
-//     res.status(200).json({
-//       status: "success",
-//       code: 200,
-//       message: "List of contacts found",
-//       data: { contacts },
-//     });
-//   } catch (e) {
-//     console.error(e);
-//   }
-// });
-
 router.get("/", indexContacts);
-
-router.get("/:contactId", async (req, res, next) => {
-  try {
-    const id = req.params.contactId;
-    const dataById = await getContactById(id);
-    const contactById = JSON.stringify(dataById);
-    const contact = JSON.parse(contactById);
-
-    if (contact) {
-      return res.status(200).json({
-        status: "success",
-        code: 200,
-        message: "Contact found",
-        data: { contact },
-      });
-    }
-
-    return res.status(404).json({
-      status: "bad request",
-      code: 404,
-      message: "Nof found",
-    });
-  } catch (e) {
-    console.error(e);
-  }
-});
+router.get("/:contactId", showContacts);
 
 router.delete("/:contactId", async (req, res, next) => {
   try {
