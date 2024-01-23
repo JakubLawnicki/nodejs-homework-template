@@ -1,5 +1,5 @@
-const { updateContact } = require("../../models/contacts");
 const Joi = require("joi");
+const { updateContact } = require("../../models/contacts");
 
 const updateContacts = async (req, res, next) => {
   try {
