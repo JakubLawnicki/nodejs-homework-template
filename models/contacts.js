@@ -76,10 +76,29 @@ const updateContact = async (contactId, body) => {
   }
 };
 
+const updateStatusContact = async (contactId, body) => {
+  try {
+    const statusToUpdate = await Contact.findById(contactId);
+
+    if (!statusToUpdate) {
+      return false;
+    }
+
+    statusToUpdate.favorite = body.favorite;
+
+    const updated = await statusToUpdate.save();
+
+    return updated;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 module.exports = {
   listContacts,
   getContactById,
   removeContact,
   addContact,
   updateContact,
+  updateStatusContact,
 };
