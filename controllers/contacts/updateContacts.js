@@ -3,18 +3,20 @@ const { updateContact } = require("../../models/contacts");
 
 const updateContacts = async (req, res, next) => {
   try {
-    const { name, email, phone } = req.body;
+    const { name, email, phone, favorite } = req.body;
 
     const schema = Joi.object({
       name: Joi.string().required(),
       email: Joi.string().email().required(),
       phone: Joi.string().required(),
+      favorite: Joi.boolean().required(),
     });
 
     const { error, value } = schema.validate({
       name: name,
       email: email,
       phone: phone,
+      favorite: favorite,
     });
 
     if (error) {
@@ -22,16 +24,16 @@ const updateContacts = async (req, res, next) => {
         message: "Missing fields",
       });
     }
-    const result = await updateContact(req.params.contactId, value);
+    const updated = await updateContact(req.params.contactId, value);
 
-    if (!result) {
+    if (!updated) {
       return res.status(404).json({
         message: "Not found",
       });
     }
 
     return res.status(200).json({
-      contact: result,
+      updated,
     });
   } catch (err) {
     res.status(500).json(`An error occurred: ${err}`);
