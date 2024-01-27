@@ -27,7 +27,7 @@ const loginUsers = async (req, res) => {
     return res.status(400).json({
       status: "bad request",
       code: 400,
-      message: "Invalid email or password",
+      message: "Email or password is wrong",
     });
   }
 
@@ -44,7 +44,11 @@ const loginUsers = async (req, res) => {
   user.token = token;
   user.save();
 
-  return res.status(200).json({ message: "Login success", data: { token } });
+  return res.status(200).json({
+    token: token,
+    user: { email, subscription: "starter" },
+    message: "Login success",
+  });
 };
 
 module.exports = {
