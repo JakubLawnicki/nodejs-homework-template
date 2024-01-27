@@ -1,6 +1,6 @@
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
-const { Contact } = require("../../models/contacts.schema");
+const { User } = require("./users.schema");
 
 const strategy = new passportJWT.Strategy(
   {
@@ -8,12 +8,12 @@ const strategy = new passportJWT.Strategy(
     jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken,
   },
   (payload, done) => {
-    Contact.findOne({ _id: payload.id })
-      .then((contact) => {
-        if (contact) {
-          return done(null, contact);
+    User.findOne({ _id: payload.id })
+      .then((user) => {
+        if (user) {
+          return done(null, user);
         }
-        return done(new Error("invalid token"));
+        return done(new Error("Invalid token"));
       })
       .catch((e) => {
         return done(e);

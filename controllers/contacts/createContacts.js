@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const { addContact } = require("../../models/contacts");
+const { addContact } = require("../../models/contacts/contacts");
 
 const createContacts = async (req, res, next) => {
   try {
