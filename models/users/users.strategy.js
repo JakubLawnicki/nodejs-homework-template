@@ -5,7 +5,7 @@ const { User } = require("./users.schema");
 const strategy = new passportJWT.Strategy(
   {
     secretOrKey: process.env.JWT_SECRET,
-    jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken,
+    jwtFromRequest: passportJWT.ExtractJwt.fromAuthHeaderAsBearerToken(),
   },
   (payload, done) => {
     User.findOne({ _id: payload.id })

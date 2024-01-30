@@ -6,7 +6,7 @@ const auth = (req, res, next) => {
     if (err || !user) {
       return res
         .status(401)
-        .json({ status: "unauthorized", code: 401, message: "Invalid token" });
+        .json({ status: "Unauthorized", code: 401, message: "Not authorized" });
     }
     req.user = user;
     next();
