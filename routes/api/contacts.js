@@ -6,16 +6,17 @@ const { createContacts } = require("../../controllers/contacts/createContacts");
 const { deleteContacts } = require("../../controllers/contacts/deleteContacts");
 const { updateContacts } = require("../../controllers/contacts/updateContacts");
 const { statusContacts } = require("../../controllers/contacts/statusContacts");
+const { auth } = require("../../models/users/users.auth");
 
 const router = express.Router();
 
 router.use(express.json());
 
-router.get("/", indexContacts);
-router.get("/:contactId", showContacts);
-router.post("/", createContacts);
-router.delete("/:contactId", deleteContacts);
-router.put("/:contactId", updateContacts);
-router.patch("/:contactId/favorite", statusContacts);
+router.get("/", auth, indexContacts);
+router.get("/:contactId", auth, showContacts);
+router.post("/", auth, createContacts);
+router.delete("/:contactId", auth, deleteContacts);
+router.put("/:contactId", auth, updateContacts);
+router.patch("/:contactId/favorite", auth, statusContacts);
 
 module.exports = router;
