@@ -10,7 +10,6 @@ const loginUsers = async (req, res) => {
       email: Joi.string().email().required(),
       password: Joi.string().required(),
     });
-
     const { error } = schema.validate({
       email: email,
       password: password,
