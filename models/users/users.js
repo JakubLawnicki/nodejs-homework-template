@@ -1,4 +1,5 @@
 const { User } = require("./users.schema");
+const gravatar = require("gravatar");
 
 const createUser = async (body) => {
   try {
@@ -7,6 +8,7 @@ const createUser = async (body) => {
     const user = new User({
       email,
       password,
+      avatarUrl: gravatar.url(email),
     });
 
     user.setPassword(password);

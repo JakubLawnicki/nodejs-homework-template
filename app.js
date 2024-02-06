@@ -22,6 +22,7 @@ if (connection) {
 }
 
 app.use(logger(formatsLogger));
+app.use(express.static("public"));
 app.use(cors());
 app.use(express.json());
 
