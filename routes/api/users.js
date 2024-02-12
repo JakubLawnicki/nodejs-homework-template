@@ -10,6 +10,10 @@ const { loginUsers } = require("../../controllers/users/loginUsers");
 const { logoutUsers } = require("../../controllers/users/logoutUsers");
 const { auth } = require("../../models/users/users.auth");
 const { showUsers } = require("../../controllers/users/showUsers");
+const {
+  verifyUsers,
+  resendVerificationMail,
+} = require("../../controllers/users/verifyUsers");
 
 const uploadDir = path.join(process.cwd(), "tmp");
 const storeAvatar = path.join(process.cwd(), "public/avatars");
@@ -35,6 +39,8 @@ router.post("/signup", createUsers);
 router.post("/login", loginUsers);
 router.get("/logout", auth, logoutUsers);
 router.get("/current", auth, showUsers);
+router.post("/verify", resendVerificationMail);
+router.get("/verify/:verificationToken", verifyUsers);
 router.patch("/avatars", auth, upload.single("avatar"), async (req, res) => {
   try {
     const { _id } = req.user;

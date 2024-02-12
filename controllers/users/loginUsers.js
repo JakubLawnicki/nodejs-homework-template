@@ -23,6 +23,10 @@ const loginUsers = async (req, res) => {
 
     const user = await User.findOne({ email });
 
+    if (!user.verify) {
+      return res.status(404).json({ message: "User is not active" });
+    }
+
     if (!user || !user.validPassword(password)) {
       return res.status(400).json({
         status: "bad request",
