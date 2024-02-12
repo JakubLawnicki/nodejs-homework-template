@@ -1,5 +1,6 @@
 const { User } = require("./users.schema");
 const gravatar = require("gravatar");
+const { v4: uuidv4 } = require("uuid");
 
 const createUser = async (body) => {
   try {
@@ -9,6 +10,7 @@ const createUser = async (body) => {
       email,
       password,
       avatarUrl: gravatar.url(email),
+      verificationToken: uuidv4(),
     });
 
     user.setPassword(password);

@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const { createUser, isEmailFree } = require("../../models/users/users");
+const { mailClient } = require("../../models/shared/mail");
 
 const createUsers = async (req, res, next) => {
   try {
@@ -25,6 +26,16 @@ const createUsers = async (req, res, next) => {
 
     if (freeEmail) {
       const user = await createUser(value);
+
+      mailClient.messages.create(
+        "sandbox9a2814cc22a444b99c9d45e8b8f33fd7.mailgun.org",
+        {
+          from: "no-reply@sandbox9a2814cc22a444b99c9d45e8b8f33fd7.mailgun.org",
+          to: [email],
+          subject: "Verification email",
+          text: `http://localhost:3000/users/verify/${value.verificationToken}`,
+        }
+      );
 
       return res.status(201).json({ status: "created", user: user });
     } else {
